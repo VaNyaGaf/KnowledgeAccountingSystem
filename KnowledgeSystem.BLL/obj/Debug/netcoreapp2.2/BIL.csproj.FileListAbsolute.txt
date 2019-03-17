@@ -1,0 +1,9 @@
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\bin\Debug\netcoreapp2.2\BIL.deps.json
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\bin\Debug\netcoreapp2.2\BIL.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\bin\Debug\netcoreapp2.2\BIL.pdb
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.csprojAssemblyReference.cache
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.csproj.CoreCompileInputs.cache
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.AssemblyInfoInputs.cache
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.AssemblyInfo.cs
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\BIL\obj\Debug\netcoreapp2.2\BIL.pdb
