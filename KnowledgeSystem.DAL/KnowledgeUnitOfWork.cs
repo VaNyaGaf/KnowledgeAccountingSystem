@@ -20,11 +20,6 @@ namespace KnowledgeSystem.DAL
             _db.Dispose();
         }
 
-        public void Save()
-        {
-            _db.SaveChanges();
-        }
-
         public void SaveAsync()
         {
             _db.SaveChangesAsync();

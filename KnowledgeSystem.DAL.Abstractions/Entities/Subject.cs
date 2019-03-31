@@ -8,6 +8,6 @@ namespace KnowledgeSystem.DAL.Abstractions.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public IList<UserSubject> UserSubjects { get; set; }
+        public virtual IList<UserSubject> UserSubjects { get; set; }
     }
 }

@@ -6,7 +6,6 @@ namespace KnowledgeSystem.DAL.Abstractions
     {
         IUserRepository Users { get; }
         ISubjectRepository Subjects { get; }
-        void Save();
         void SaveAsync();
     }
 }

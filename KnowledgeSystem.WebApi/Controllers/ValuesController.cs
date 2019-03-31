@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions;
+using KnowledgeSystem.DAL.Abstractions.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.WebApi.Controllers
 {
@@ -12,9 +13,14 @@ namespace KnowledgeSystem.WebApi.Controllers
     public class ValuesController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ValuesController(IUnitOfWork unitOfWork)
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+
+        public ValuesController(IUnitOfWork unitOfWork, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _unitOfWork = unitOfWork;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
         // GET api/values
         [HttpGet]
@@ -32,22 +38,18 @@ namespace KnowledgeSystem.WebApi.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<object> Post([FromBody] UserDTO userDTO)
         {
+            var user = new User()
+            {
+                UserName = userDTO.FirstName,
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName
+            };
+            var result = await _userManager.CreateAsync(user, userDTO.Password);
+            return Ok(result);
         }
 
-        [HttpPost]
-        [Route("AddUser")]
-        public void Post(string firstName, string lastName, string pass)
-        {
-            _unitOfWork.Users.Add(new DAL.Abstractions.Entities.User()
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                Password = pass
-            });
-            _unitOfWork.Save();
-        }
 
         // PUT api/values/5
         [HttpPut("{id}")]

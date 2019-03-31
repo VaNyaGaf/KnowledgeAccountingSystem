@@ -19,3 +19,5 @@ N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.W
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.WebApi\bin\Debug\netcoreapp2.2\KnowledgeSystem.DAL.pdb
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.WebApi\bin\Debug\netcoreapp2.2\KnowledgeSystem.DAL.Abstractions.pdb
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.WebApi\obj\Debug\netcoreapp2.2\KnowledgeSystem.WebApi.csproj.CopyComplete
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.WebApi\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.WebApi\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.pdb

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DependenciesInjection\DependenciesInjection.csproj" />
+    <ProjectReference Include="..\KnowledgeSystem.BLL.Abstractions\KnowledgeSystem.BLL.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
