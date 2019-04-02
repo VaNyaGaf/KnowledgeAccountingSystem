@@ -7,3 +7,8 @@ N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.B
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\obj\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.dll
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\obj\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.pdb
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\obj\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.csprojAssemblyReference.cache
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\bin\Debug\netcoreapp2.2\KnowledgeSystem.DAL.Abstractions.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\bin\Debug\netcoreapp2.2\KnowledgeSystem.DAL.Abstractions.pdb
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.xml
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\KnowledgeSystem.BLL.Abstractions\obj\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.csproj.CopyComplete

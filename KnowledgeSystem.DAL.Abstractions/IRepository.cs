@@ -10,9 +10,6 @@ namespace KnowledgeSystem.DAL.Abstractions
         Task<TEntity> GetByIdAsync(int id);
         Task<List<TEntity>> GetAllAsync();
 
-        //IAsyncEnumerable FindAsync(Func<TEntity, bool> predicate);
-
         void RemoveAsync(TEntity entity);
-        void RemoveAsync(int id);
     }
 }

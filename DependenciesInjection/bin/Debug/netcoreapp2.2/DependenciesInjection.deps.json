@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "DependenciesInjection/1.0.0": {
         "dependencies": {
+          "KnowledgeSystem.BLL": "1.0.0",
           "KnowledgeSystem.DAL": "1.0.0"
         },
         "runtime": {
@@ -2048,6 +2049,24 @@
           "System.Xml.XPath": "4.3.0"
         }
       },
+      "KnowledgeSystem.BLL/1.0.0": {
+        "dependencies": {
+          "KnowledgeSystem.BLL.Abstractions": "1.0.0",
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0"
+        },
+        "runtime": {
+          "KnowledgeSystem.BLL.dll": {}
+        }
+      },
+      "KnowledgeSystem.BLL.Abstractions/1.0.0": {
+        "dependencies": {
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0"
+        },
+        "runtime": {
+          "KnowledgeSystem.BLL.Abstractions.dll": {}
+        }
+      },
       "KnowledgeSystem.DAL/1.0.0": {
         "dependencies": {
           "KnowledgeSystem.DAL.Abstractions": "1.0.0",
@@ -3345,6 +3364,16 @@
       "sha512": "sha512-jw9oHHEIVW53mHY9PgrQa98Xo2IZ0ZjrpdOTmtvk+Rvg4tq7dydmxdNqUvJ5YwjDqhn75mBXWttWjiKhWP53LQ==",
       "path": "system.xml.xpath.xdocument/4.3.0",
       "hashPath": "system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
+    },
+    "KnowledgeSystem.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "KnowledgeSystem.BLL.Abstractions/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "KnowledgeSystem.DAL/1.0.0": {
       "type": "project",

@@ -322,6 +322,7 @@
       },
       "DependenciesInjection/1.0.0": {
         "dependencies": {
+          "KnowledgeSystem.BLL": "1.0.0",
           "KnowledgeSystem.DAL": "1.0.0"
         },
         "runtime": {
@@ -331,7 +332,23 @@
           "DependenciesInjection.dll": {}
         }
       },
+      "KnowledgeSystem.BLL/1.0.0": {
+        "dependencies": {
+          "KnowledgeSystem.BLL.Abstractions": "1.0.0",
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0"
+        },
+        "runtime": {
+          "KnowledgeSystem.BLL.dll": {}
+        },
+        "compile": {
+          "KnowledgeSystem.BLL.dll": {}
+        }
+      },
       "KnowledgeSystem.BLL.Abstractions/1.0.0": {
+        "dependencies": {
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0"
+        },
         "runtime": {
           "KnowledgeSystem.BLL.Abstractions.dll": {}
         },
@@ -3415,6 +3432,11 @@
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
     "DependenciesInjection/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "KnowledgeSystem.BLL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

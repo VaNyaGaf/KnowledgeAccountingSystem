@@ -4443,6 +4443,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
+          "KnowledgeSystem.BLL": "1.0.0",
           "KnowledgeSystem.DAL": "1.0.0"
         },
         "compile": {
@@ -4452,9 +4453,27 @@
           "bin/placeholder/DependenciesInjection.dll": {}
         }
       },
+      "KnowledgeSystem.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "KnowledgeSystem.BLL.Abstractions": "1.0.0",
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0"
+        },
+        "compile": {
+          "bin/placeholder/KnowledgeSystem.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KnowledgeSystem.BLL.dll": {}
+        }
+      },
       "KnowledgeSystem.BLL.Abstractions/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/KnowledgeSystem.BLL.Abstractions.dll": {}
         },
@@ -12123,6 +12142,11 @@
       "type": "project",
       "path": "../DependenciesInjection/DependenciesInjection.csproj",
       "msbuildProject": "../DependenciesInjection/DependenciesInjection.csproj"
+    },
+    "KnowledgeSystem.BLL/1.0.0": {
+      "type": "project",
+      "path": "../KnowledgeSystem.BLL/KnowledgeSystem.BLL.csproj",
+      "msbuildProject": "../KnowledgeSystem.BLL/KnowledgeSystem.BLL.csproj"
     },
     "KnowledgeSystem.BLL.Abstractions/1.0.0": {
       "type": "project",

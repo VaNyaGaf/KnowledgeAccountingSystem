@@ -12,3 +12,7 @@ N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjec
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\obj\Debug\netcoreapp2.2\DependenciesInjection.csproj.CopyComplete
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\obj\Debug\netcoreapp2.2\DependenciesInjection.dll
 N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\obj\Debug\netcoreapp2.2\DependenciesInjection.pdb
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.dll
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.pdb
+N:\VaNya\Programming\Epam_Final_Project\KnowledgeAccountingSys\DependenciesInjection\bin\Debug\netcoreapp2.2\KnowledgeSystem.BLL.Abstractions.pdb

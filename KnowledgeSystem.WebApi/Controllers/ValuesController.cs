@@ -1,4 +1,5 @@
 ﻿using KnowledgeSystem.BLL.Abstractions;
+using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -12,13 +13,15 @@ namespace KnowledgeSystem.WebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly IUserService _userService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public ValuesController(IUnitOfWork unitOfWork, UserManager<User> userManager, SignInManager<User> signInManager)
+        public ValuesController(IUnitOfWork unitOfWork, IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _unitOfWork = unitOfWork;
+            _userService = userService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -50,6 +53,13 @@ namespace KnowledgeSystem.WebApi.Controllers
             return Ok(result);
         }
 
+        // GET api/values
+        [HttpGet]
+        [Route("GetUsers")]
+        public async Task<List<User>> GetUsers()
+        {
+            return await _userService.GetAllAsync();
+        }
 
         // PUT api/values/5
         [HttpPut("{id}")]

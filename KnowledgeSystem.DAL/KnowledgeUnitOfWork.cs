@@ -15,14 +15,30 @@ namespace KnowledgeSystem.DAL
             Subjects = subjectRepository;
         }
 
+        private bool _isDisposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_isDisposed)
+            {
+                if (disposing)
+                {
+                    _db.Dispose();
+                }
+                _isDisposed = true;
+            }
+        }
+
         public void Dispose()
         {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
             _db.Dispose();
         }
 
-        public void SaveAsync()
+        public async void SaveAsync()
         {
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 }

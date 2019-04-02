@@ -13,19 +13,19 @@ namespace KnowledgeSystem.DAL.Repositories
             _db = context;
         }
 
-        public void AddAsync(TEntity entity)
+        public async void AddAsync(TEntity entity)
         {
-            _db.Set<TEntity>().AddAsync(entity);
+            await _db.Set<TEntity>().AddAsync(entity);
         }
 
-        public Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync()
         {
-            return _db.Set<TEntity>().ToListAsync();
+            return await _db.Set<TEntity>().ToListAsync();
         }
 
-        public Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _db.Set<TEntity>().FindAsync(id);
+            return await _db.Set<TEntity>().FindAsync(id);
         }
 
         public async void RemoveAsync(TEntity entity)

@@ -2844,6 +2844,34 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
+      "KnowledgeSystem.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "KnowledgeSystem.BLL.Abstractions": "1.0.0",
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "2.2.0"
+        },
+        "compile": {
+          "bin/placeholder/KnowledgeSystem.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KnowledgeSystem.BLL.dll": {}
+        }
+      },
+      "KnowledgeSystem.BLL.Abstractions/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "KnowledgeSystem.DAL.Abstractions": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/KnowledgeSystem.BLL.Abstractions.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/KnowledgeSystem.BLL.Abstractions.dll": {}
+        }
+      },
       "KnowledgeSystem.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -8536,6 +8564,16 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
+    "KnowledgeSystem.BLL/1.0.0": {
+      "type": "project",
+      "path": "../KnowledgeSystem.BLL/KnowledgeSystem.BLL.csproj",
+      "msbuildProject": "../KnowledgeSystem.BLL/KnowledgeSystem.BLL.csproj"
+    },
+    "KnowledgeSystem.BLL.Abstractions/1.0.0": {
+      "type": "project",
+      "path": "../KnowledgeSystem.BLL.Abstractions/KnowledgeSystem.BLL.Abstractions.csproj",
+      "msbuildProject": "../KnowledgeSystem.BLL.Abstractions/KnowledgeSystem.BLL.Abstractions.csproj"
+    },
     "KnowledgeSystem.DAL/1.0.0": {
       "type": "project",
       "path": "../KnowledgeSystem.DAL/KnowledgeSystem.DAL.csproj",
@@ -8549,6 +8587,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "KnowledgeSystem.BLL >= 1.0.0",
       "KnowledgeSystem.DAL >= 1.0.0",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
@@ -8583,6 +8622,9 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
+            "N:\\VaNya\\Programming\\Epam_Final_Project\\KnowledgeAccountingSys\\KnowledgeSystem.BLL\\KnowledgeSystem.BLL.csproj": {
+              "projectPath": "N:\\VaNya\\Programming\\Epam_Final_Project\\KnowledgeAccountingSys\\KnowledgeSystem.BLL\\KnowledgeSystem.BLL.csproj"
+            },
             "N:\\VaNya\\Programming\\Epam_Final_Project\\KnowledgeAccountingSys\\KnowledgeSystem.DAL\\KnowledgeSystem.DAL.csproj": {
               "projectPath": "N:\\VaNya\\Programming\\Epam_Final_Project\\KnowledgeAccountingSys\\KnowledgeSystem.DAL\\KnowledgeSystem.DAL.csproj"
             }

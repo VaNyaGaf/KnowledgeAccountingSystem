@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KnowledgeSystem.BLL\KnowledgeSystem.BLL.csproj" />
     <ProjectReference Include="..\KnowledgeSystem.DAL\KnowledgeSystem.DAL.csproj" />
   </ItemGroup>
 
