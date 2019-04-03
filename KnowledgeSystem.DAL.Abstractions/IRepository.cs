@@ -8,7 +8,7 @@ namespace KnowledgeSystem.DAL.Abstractions
         void AddAsync(TEntity entity);
 
         Task<TEntity> GetByIdAsync(int id);
-        Task<List<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync();
 
         void RemoveAsync(TEntity entity);
     }

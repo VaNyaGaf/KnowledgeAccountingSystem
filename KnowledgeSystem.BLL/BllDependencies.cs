@@ -8,6 +8,7 @@ namespace KnowledgeSystem.BLL
         public static void RegisterBllDependencies(this IServiceCollection service)
         {
             service.AddTransient<IUserService, UserService>();
+            service.AddTransient<ISubjectService, SubjectService>();
         }
     }
 }

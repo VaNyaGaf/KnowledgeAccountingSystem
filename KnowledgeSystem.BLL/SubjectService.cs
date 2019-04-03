@@ -1,35 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using KnowledgeSystem.BLL.Abstractions;
+using KnowledgeSystem.DAL.Abstractions;
+using KnowledgeSystem.DAL.Abstractions.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using KnowledgeSystem.BLL.Abstractions;
-using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 
 namespace KnowledgeSystem.BLL
 {
     public class SubjectService : ISubjectService
     {
-        public void AddAsync(SubjectDTO entity)
+        private readonly IUnitOfWork _unitOfWork;
+        public SubjectService(IUnitOfWork unitOfWork)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork = unitOfWork;
         }
 
-        public Task<List<SubjectDTO>> GetAllAsync()
+        public void AddAsync(Subject entity)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork.Subjects.AddAsync(entity);
+            _unitOfWork.SaveAsync();
+
+            //throw new System.NotImplementedException();
         }
 
-        public Task<SubjectDTO> GetByIdAsync(int id)
+        public async Task<IEnumerable<Subject>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _unitOfWork.Subjects.GetAllAsync();
+
+            //throw new System.NotImplementedException();
         }
 
-        public void RemoveAsync(SubjectDTO entity)
+        public async Task<Subject> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _unitOfWork.Subjects.GetByIdAsync(id);
+
+            //throw new System.NotImplementedException();
         }
 
-        public void RemoveAsync(int id)
+        public void RemoveAsync(Subject entity)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork.Subjects.RemoveAsync(entity);
+            _unitOfWork.SaveAsync();
+
+            //throw new System.NotImplementedException();
         }
     }
 }

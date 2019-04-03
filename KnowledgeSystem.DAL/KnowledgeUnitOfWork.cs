@@ -33,7 +33,7 @@ namespace KnowledgeSystem.DAL
         {
             Dispose(true);
             System.GC.SuppressFinalize(this);
-            _db.Dispose();
+            //_db.Dispose();
         }
 
         public async void SaveAsync()

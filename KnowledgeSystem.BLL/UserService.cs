@@ -15,36 +15,32 @@ namespace KnowledgeSystem.BLL
             _unitOfWork = unitOfWork;
         }
 
-        public void AddAsync(UserDTO entity)
+        public void AddAsync(User entity)
         {
-            //var user = new User()
-            //{
-            //    FirstName = entity.FirstName,
-            //    LastName = entity.LastName
-            //};
-            //_unitOfWork.Users.AddAsync(user);
-            //return Task.Run(() => _unitOfWork.Users.AddAsync(user));
-            throw new System.NotImplementedException();
+            _unitOfWork.Users.AddAsync(entity);
+            _unitOfWork.SaveAsync();
+
+            //throw new System.NotImplementedException();
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _unitOfWork.Users.GetAllAsync();
         }
 
-        public Task<UserDTO> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _unitOfWork.Users.GetByIdAsync(id);
+
+            //throw new System.NotImplementedException();
         }
 
-        public void RemoveAsync(UserDTO entity)
+        public void RemoveAsync(User entity)
         {
-            throw new System.NotImplementedException();
-        }
+            _unitOfWork.Users.RemoveAsync(entity);
+            _unitOfWork.SaveAsync();
 
-        public void RemoveAsync(int id)
-        {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

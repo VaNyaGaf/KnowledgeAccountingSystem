@@ -1,20 +1,18 @@
-﻿using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using KnowledgeSystem.DAL.Abstractions.Entities;
+﻿using KnowledgeSystem.DAL.Abstractions.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KnowledgeSystem.BLL.Abstractions
 {
+    //Is Should be DTO's models or usual model
     public interface IUserService
     {
-        void AddAsync(UserDTO entity);
+        void AddAsync(User entity);
 
-        Task<List<User>> GetAllAsync();
+        Task<IEnumerable<User>> GetAllAsync();
 
-        Task<UserDTO> GetByIdAsync(int id);
+        Task<User> GetByIdAsync(int id);
 
-        void RemoveAsync(UserDTO entity);
-
-        void RemoveAsync(int id);
+        void RemoveAsync(User entity);
     }
 }

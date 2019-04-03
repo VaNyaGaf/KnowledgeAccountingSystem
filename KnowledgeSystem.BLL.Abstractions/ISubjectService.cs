@@ -1,19 +1,18 @@
-﻿using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
+﻿using KnowledgeSystem.DAL.Abstractions.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KnowledgeSystem.BLL.Abstractions
 {
+    //Is Should be DTO's models or usual model
     public interface ISubjectService
     {
-        void AddAsync(SubjectDTO entity);
+        void AddAsync(Subject entity);
 
-        Task<List<SubjectDTO>> GetAllAsync();
+        Task<IEnumerable<Subject>> GetAllAsync();
 
-        Task<SubjectDTO> GetByIdAsync(int id);
+        Task<Subject> GetByIdAsync(int id);
 
-        void RemoveAsync(SubjectDTO entity);
-
-        void RemoveAsync(int id);
+        void RemoveAsync(Subject entity);
     }
 }

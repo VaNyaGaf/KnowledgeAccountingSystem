@@ -56,7 +56,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         // GET api/values
         [HttpGet]
         [Route("GetUsers")]
-        public async Task<List<User>> GetUsers()
+        public async Task<IEnumerable<User>> GetUsers()
         {
             return await _userService.GetAllAsync();
         }
