@@ -5,11 +5,11 @@ namespace KnowledgeSystem.DAL.Abstractions
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        void AddAsync(TEntity entity);
+        void Add(TEntity entity);
 
         Task<TEntity> GetByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        void RemoveAsync(TEntity entity);
+        void Remove(TEntity entity);
     }
 }

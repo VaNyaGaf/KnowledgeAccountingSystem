@@ -1,4 +1,5 @@
-﻿using KnowledgeSystem.BLL.Abstractions;
+﻿using AutoMapper;
+using KnowledgeSystem.BLL.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KnowledgeSystem.BLL
@@ -7,6 +8,7 @@ namespace KnowledgeSystem.BLL
     {
         public static void RegisterBllDependencies(this IServiceCollection service)
         {
+            service.AddAutoMapper();
             service.AddTransient<IUserService, UserService>();
             service.AddTransient<ISubjectService, SubjectService>();
         }

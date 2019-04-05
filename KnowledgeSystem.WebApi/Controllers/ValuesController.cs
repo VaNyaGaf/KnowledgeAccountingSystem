@@ -1,4 +1,5 @@
-﻿using KnowledgeSystem.BLL.Abstractions;
+﻿using AutoMapper;
+using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
@@ -15,13 +16,15 @@ namespace KnowledgeSystem.WebApi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public ValuesController(IUnitOfWork unitOfWork, IUserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
+        public ValuesController(IUnitOfWork unitOfWork, IUserService userService, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _unitOfWork = unitOfWork;
             _userService = userService;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -51,6 +54,22 @@ namespace KnowledgeSystem.WebApi.Controllers
             };
             var result = await _userManager.CreateAsync(user, userDTO.Password);
             return Ok(result);
+        }
+
+        [HttpPost("RegUser")]
+        //[Route("RegUser")]
+        public async Task<object> PostRegUser([FromBody] UserDTO userDTO)
+        {
+            var user = _mapper.Map<User>(userDTO);
+            try
+            {
+                await _userService.AddAsync(user);
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         // GET api/values

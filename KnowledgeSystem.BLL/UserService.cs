@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using KnowledgeSystem.BLL.Abstractions;
-using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
+﻿using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.BLL
 {
@@ -15,12 +14,10 @@ namespace KnowledgeSystem.BLL
             _unitOfWork = unitOfWork;
         }
 
-        public void AddAsync(User entity)
+        public async Task AddAsync(User entity)
         {
-            _unitOfWork.Users.AddAsync(entity);
-            _unitOfWork.SaveAsync();
-
-            //throw new System.NotImplementedException();
+            _unitOfWork.Users.Add(entity);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -31,16 +28,12 @@ namespace KnowledgeSystem.BLL
         public async Task<User> GetByIdAsync(int id)
         {
             return await _unitOfWork.Users.GetByIdAsync(id);
-
-            //throw new System.NotImplementedException();
         }
 
-        public void RemoveAsync(User entity)
+        public async Task RemoveAsync(User entity)
         {
-            _unitOfWork.Users.RemoveAsync(entity);
-            _unitOfWork.SaveAsync();
-
-            //throw new System.NotImplementedException();
+            _unitOfWork.Users.Remove(entity);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

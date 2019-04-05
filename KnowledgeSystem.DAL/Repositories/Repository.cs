@@ -13,9 +13,9 @@ namespace KnowledgeSystem.DAL.Repositories
             _db = context;
         }
 
-        public async void AddAsync(TEntity entity)
+        public void Add(TEntity entity)
         {
-            await _db.Set<TEntity>().AddAsync(entity);
+            _db.Set<TEntity>().Add(entity);
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -28,9 +28,9 @@ namespace KnowledgeSystem.DAL.Repositories
             return await _db.Set<TEntity>().FindAsync(id);
         }
 
-        public async void RemoveAsync(TEntity entity)
+        public void Remove(TEntity entity)
         {
-            await Task.Run(() => _db.Set<TEntity>().Remove(entity));        //Do we need async here and does it implemented in a right way??
+            _db.Set<TEntity>().Remove(entity);
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.DAL.Abstractions
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
         IUserRepository Users { get; }
         ISubjectRepository Subjects { get; }
-        void SaveAsync();
+        Task<int> SaveAsync();
     }
 }

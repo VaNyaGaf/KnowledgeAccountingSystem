@@ -1,4 +1,5 @@
 ﻿using KnowledgeSystem.DAL.Abstractions;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.DAL
 {
@@ -15,30 +16,9 @@ namespace KnowledgeSystem.DAL
             Subjects = subjectRepository;
         }
 
-        private bool _isDisposed = false;
-
-        protected virtual void Dispose(bool disposing)
+        public async Task<int> SaveAsync()
         {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    _db.Dispose();
-                }
-                _isDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            System.GC.SuppressFinalize(this);
-            //_db.Dispose();
-        }
-
-        public async void SaveAsync()
-        {
-            await _db.SaveChangesAsync();
+            return await _db.SaveChangesAsync();
         }
     }
 }

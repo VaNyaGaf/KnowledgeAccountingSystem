@@ -14,34 +14,26 @@ namespace KnowledgeSystem.BLL
             _unitOfWork = unitOfWork;
         }
 
-        public void AddAsync(Subject entity)
+        public async Task AddAsync(Subject entity)
         {
-            _unitOfWork.Subjects.AddAsync(entity);
-            _unitOfWork.SaveAsync();
-
-            //throw new System.NotImplementedException();
+            _unitOfWork.Subjects.Add(entity);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<Subject>> GetAllAsync()
         {
             return await _unitOfWork.Subjects.GetAllAsync();
-
-            //throw new System.NotImplementedException();
         }
 
         public async Task<Subject> GetByIdAsync(int id)
         {
             return await _unitOfWork.Subjects.GetByIdAsync(id);
-
-            //throw new System.NotImplementedException();
         }
 
-        public void RemoveAsync(Subject entity)
+        public async Task RemoveAsync(Subject entity)
         {
-            _unitOfWork.Subjects.RemoveAsync(entity);
-            _unitOfWork.SaveAsync();
-
-            //throw new System.NotImplementedException();
+            _unitOfWork.Subjects.Remove(entity);
+            await _unitOfWork.SaveAsync();
         }
     }
 }
