@@ -23,14 +23,14 @@ namespace KnowledgeSystem.DAL.Repositories
             return await _db.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync<T>(T id)
         {
             return await _db.Set<TEntity>().FindAsync(id);
         }
 
         public void Remove(TEntity entity)
         {
-            _db.Set<TEntity>().Remove(entity);
+            _db.Entry(entity).State = EntityState.Deleted;
         }
     }
 }

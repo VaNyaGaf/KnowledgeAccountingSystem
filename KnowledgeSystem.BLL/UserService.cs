@@ -25,7 +25,7 @@ namespace KnowledgeSystem.BLL
             return await _unitOfWork.Users.GetAllAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(string id)
         {
             return await _unitOfWork.Users.GetByIdAsync(id);
         }

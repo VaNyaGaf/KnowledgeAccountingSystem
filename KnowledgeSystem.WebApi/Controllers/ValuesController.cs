@@ -19,7 +19,11 @@ namespace KnowledgeSystem.WebApi.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-
+        //***************************************
+        //  TO DO:
+        //      Add JWT
+        //      Add second Db for auth users
+        //***************************************
         public ValuesController(IUnitOfWork unitOfWork, IUserService userService, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userService = userService;
@@ -65,6 +69,21 @@ namespace KnowledgeSystem.WebApi.Controllers
             {
                 await _userService.AddAsync(user);
                 return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                return NotFound(ex);
+            }
+        }
+        [HttpDelete("DelUser")]
+        public async Task<IActionResult> DeleteUser([FromBody] UserDTO userDTO)
+        {
+            var user = _mapper.Map<User>(userDTO);
+            try
+            {
+                //var user = await _userService.GetByIdAsync(userDTO.Id);
+                await _userService.RemoveAsync(user);
+                return Ok(user);
             }
             catch (System.Exception ex)
             {
