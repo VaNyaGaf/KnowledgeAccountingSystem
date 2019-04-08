@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\KnowledgeSystem.BLL.Abstractions\KnowledgeSystem.BLL.Abstractions.csproj" />
     <ProjectReference Include="..\KnowledgeSystem.DAL.Abstractions\KnowledgeSystem.DAL.Abstractions.csproj" />
+    <ProjectReference Include="..\KnowledgeSystem.DAL\KnowledgeSystem.DAL.csproj" />
   </ItemGroup>
 
 </Project>

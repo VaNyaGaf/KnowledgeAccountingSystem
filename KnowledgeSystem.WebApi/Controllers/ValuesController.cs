@@ -3,6 +3,7 @@ using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -33,10 +34,10 @@ namespace KnowledgeSystem.WebApi.Controllers
             _signInManager = signInManager;
         }
         // GET api/values
-        [HttpGet]
+        [HttpGet, Authorize]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Hello", "from", "Authorize", "Method" };
         }
 
         // GET api/values/5

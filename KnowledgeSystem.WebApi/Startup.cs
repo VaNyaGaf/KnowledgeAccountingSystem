@@ -21,8 +21,10 @@ namespace KnowledgeSystem.WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // Custom configuration for DI and JWT
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.RegisterDependencies(connectionString);
+            services.ConfigureJwt(Configuration["JWT:Issuer"], Configuration["JWT:Audience"], Configuration["JWT:SecretKey"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +41,7 @@ namespace KnowledgeSystem.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

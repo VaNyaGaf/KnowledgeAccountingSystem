@@ -8,7 +8,10 @@ namespace KnowledgeSystem.BLL.AutoMapperProfiles
     {
         public UserProfile()
         {
-            CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<UserDTO, User>()
+                .ForMember(u => u.UserName, opt => opt.MapFrom(dto => $"{dto.FirstName}.{dto.LastName}"));
+            CreateMap<User, UserDTO>()
+                .ForMember(dto => dto.Password, opt => opt.Ignore());
         }
     }
 }
