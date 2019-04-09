@@ -1,17 +1,19 @@
-﻿using KnowledgeSystem.DAL.Abstractions.Entities;
+﻿using AutoMapper;
+using KnowledgeSystem.BLL.Abstractions;
+using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
+using KnowledgeSystem.DAL.Abstractions.Entities;
+using KnowledgeSystem.WebApi.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using AutoMapper;
-using System.Threading.Tasks;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.WebApi.Controllers
 {
@@ -19,15 +21,22 @@ namespace KnowledgeSystem.WebApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<AuthUser> _userManager;
+        private readonly SignInManager<AuthUser> _signInManager;
+        private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration, IMapper mapper)
+        public AuthController(
+            UserManager<AuthUser> userManager
+            , SignInManager<AuthUser> signInManager
+            , IUserService userService
+            , IConfiguration configuration
+            , IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userService = userService;
             _configuration = configuration;
             _mapper = mapper;
         }
@@ -36,35 +45,56 @@ namespace KnowledgeSystem.WebApi.Controllers
         [Route("sign-up")]
         public async Task<IActionResult> SignUp([FromBody] UserDTO userDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var authUser = new AuthUser(userDto.Email);
+            var result = await _userManager.CreateAsync(authUser, userDto.Password);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            //await _signInManager.SignInAsync(authUser, false);     // Do we need this line??
+            //authUser = _userManager.Users.FirstOrDefault(u => u.UserName == authUser.UserName);
             var user = _mapper.Map<User>(userDto);
-            var result = await _userManager.CreateAsync(user, userDto.Password);
-            //await _userManager.UpdateSecurityStampAsync(user);
-            await _signInManager.SignInAsync(user, isPersistent: false);
-            var registeredUser = _userManager.Users.FirstOrDefault(u => user.FirstName == u.FirstName);
+            user.Id = authUser.Id;
+            //var user = new User()
+            //{
+            //    Id = authUser.Id,
+            //    FirstName = userDto.FirstName,
+            //    LastName = userDto.LastName,
+            //    Email = userDto.Email
+            //};
+            await _userService.AddAsync(user);
+            var token = GeneraeToken();
 
-            var token = GeneraeToken(user);
-
-            return Ok(new { user, token, result });
+            return Ok(new { user, token });
         }
 
         [HttpPost]
         [Route("sign-in")]
-        public async Task<IActionResult> SignIn([FromBody] UserDTO userDto)
+        public async Task<IActionResult> SignIn([FromBody] SignInModel signInModel)
         {
-            var user = _mapper.Map<User>(userDto);
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, userDto.Password, false, false);
-            if (result.Succeeded)
+            if (!ModelState.IsValid)
             {
-                user = _userManager.Users.FirstOrDefault(u => u.UserName == user.UserName);
-
-                var token = GeneraeToken(user);
-
-                return Ok(new { user, token });
+                return BadRequest(ModelState);
             }
-            return BadRequest();
+
+            var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, false, false);
+
+            if (!result.Succeeded)
+                return BadRequest();
+
+            AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
+            User user = await _userService.GetByIdAsync(authUser.Id);
+            var token = GeneraeToken();
+
+            return Ok(new { user, token });
         }
 
-        private string GeneraeToken(User user)
+        private string GeneraeToken()
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]));
             var signInCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -73,10 +103,6 @@ namespace KnowledgeSystem.WebApi.Controllers
                 issuer: _configuration["JWT:Issuer"],
                 audience: _configuration["JWT:Audience"],
                 claims: new List<Claim>(),
-                //{
-                //    new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                //    new Claim("DateOfJoing", DateTime.Now.ToString())
-                //},
                 expires: DateTime.Now.AddMinutes(10),
                 signingCredentials: signInCredentials
             );

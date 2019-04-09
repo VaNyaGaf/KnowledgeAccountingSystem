@@ -10,6 +10,7 @@ namespace KnowledgeSystem.DAL.EntitiesFluentApi
         {
             builder.Property(user => user.FirstName).IsRequired().HasMaxLength(15);
             builder.Property(user => user.LastName).IsRequired().HasMaxLength(15);
+            builder.Property(user => user.Email).IsRequired();
         }
     }
 }

@@ -9,6 +9,7 @@ namespace KnowledgeSystem.BLL
     public class SubjectService : ISubjectService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public SubjectService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

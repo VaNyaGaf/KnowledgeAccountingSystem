@@ -53,7 +53,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         {
             var user = new User()
             {
-                UserName = userDTO.FirstName,
+                //UserName = userDTO.FirstName,
                 FirstName = userDTO.FirstName,
                 LastName = userDTO.LastName
             };

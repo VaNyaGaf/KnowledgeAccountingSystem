@@ -7,7 +7,8 @@ namespace KnowledgeSystem.DAL.Repositories
 {
     class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _db; 
+        protected readonly DbContext _db;
+
         public Repository(DbContext context)
         {
             _db = context;

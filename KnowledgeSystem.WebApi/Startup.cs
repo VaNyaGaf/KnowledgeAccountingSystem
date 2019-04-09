@@ -1,7 +1,9 @@
 ﻿using DependenciesInjection;
+using KnowledgeSystem.WebApi.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,9 +23,22 @@ namespace KnowledgeSystem.WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // Custom Identity configuration
+            services.AddDbContext<AuthDbContext>(option =>
+                option.UseSqlServer(Configuration.GetConnectionString("AuthDb")));
+            services.AddDefaultIdentity<AuthUser>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 0;
+            })
+                .AddEntityFrameworkStores<AuthDbContext>();
             // Custom configuration for DI and JWT
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.RegisterDependencies(connectionString);
+            var appDbConnString = Configuration.GetConnectionString("AppDb");
+            services.RegisterDependencies(appDbConnString);
             services.ConfigureJwt(Configuration["JWT:Issuer"], Configuration["JWT:Audience"], Configuration["JWT:SecretKey"]);
         }
 

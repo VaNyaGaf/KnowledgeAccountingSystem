@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KnowledgeSystem.DAL.Migrations
 {
     [DbContext(typeof(KnowledgeContext))]
-    [Migration("20190309225519_UserSubjectsTable")]
-    partial class UserSubjectsTable
+    [Migration("20190409194149_AddedEmailToUser")]
+    partial class AddedEmailToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -40,9 +40,11 @@ namespace KnowledgeSystem.DAL.Migrations
 
             modelBuilder.Entity("KnowledgeSystem.DAL.Abstractions.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -52,20 +54,18 @@ namespace KnowledgeSystem.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(15);
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(20);
-
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("KnowledgeSystem.DAL.Abstractions.Entities.UserSubject", b =>
                 {
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId");
 
                     b.Property<int>("SubjectId");
+
+                    b.Property<int>("Mark");
 
                     b.HasKey("UserId", "SubjectId");
 
