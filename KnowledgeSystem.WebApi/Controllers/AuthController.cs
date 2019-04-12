@@ -46,9 +46,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         public async Task<IActionResult> SignUp([FromBody] UserDTO userDto)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var authUser = new AuthUser(userDto.Email);
             var result = await _userManager.CreateAsync(authUser, userDto.Password);
@@ -56,19 +54,12 @@ namespace KnowledgeSystem.WebApi.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            //await _signInManager.SignInAsync(authUser, false);     // Do we need this line??
-            //authUser = _userManager.Users.FirstOrDefault(u => u.UserName == authUser.UserName);
+            //await _signInManager.SignInAsync(authUser, false);        // Do we need this line??
             var user = _mapper.Map<User>(userDto);
-            user.Id = authUser.Id;
-            //var user = new User()
-            //{
-            //    Id = authUser.Id,
-            //    FirstName = userDto.FirstName,
-            //    LastName = userDto.LastName,
-            //    Email = userDto.Email
-            //};
+            user.Id = authUser.Id;          // Is there exists another way of creating user, exmp. new User()
+
             await _userService.AddAsync(user);
-            var token = GeneraeToken();
+            var token = GeneraeToken(user);
 
             return Ok(new { user, token });
         }
@@ -78,9 +69,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         public async Task<IActionResult> SignIn([FromBody] SignInModel signInModel)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             var result = await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, false, false);
 
@@ -89,20 +78,29 @@ namespace KnowledgeSystem.WebApi.Controllers
 
             AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
             User user = await _userService.GetByIdAsync(authUser.Id);
-            var token = GeneraeToken();
+            var token = GeneraeToken(user);
 
             return Ok(new { user, token });
         }
 
-        private string GeneraeToken()
+        private string GeneraeToken(User user)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]));
             var signInCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
+            List<Claim> claims = new List<Claim>()
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.Now.ToUnixTimeSeconds().ToString())
+            };
+
+            if (user.FirstName.Contains("admin"))
+                claims.Add(new Claim(ClaimTypes.Role, "admin"));
+
             var tokeOptions = new JwtSecurityToken(
                 issuer: _configuration["JWT:Issuer"],
                 audience: _configuration["JWT:Audience"],
-                claims: new List<Claim>(),
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(10),
                 signingCredentials: signInCredentials
             );
