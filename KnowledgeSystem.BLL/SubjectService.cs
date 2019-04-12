@@ -31,6 +31,16 @@ namespace KnowledgeSystem.BLL
             return await _unitOfWork.Subjects.GetByIdAsync(id);
         }
 
+        public async Task Update(Subject subject)
+        {
+            var existingSubject = await GetByIdAsync(subject.Id);
+            if (existingSubject is null)
+                throw new System.NullReferenceException("There are no subject with such id");
+
+            _unitOfWork.Subjects.Update(subject);
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task RemoveAsync(Subject entity)
         {
             _unitOfWork.Subjects.Remove(entity);

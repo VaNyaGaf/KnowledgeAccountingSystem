@@ -12,6 +12,8 @@ namespace KnowledgeSystem.BLL.Abstractions
 
         Task<Subject> GetByIdAsync(int id);
 
+        Task Update(Subject subject);
+
         Task RemoveAsync(Subject entity);
     }
 }

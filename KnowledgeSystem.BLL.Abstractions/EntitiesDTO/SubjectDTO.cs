@@ -7,6 +7,6 @@ namespace KnowledgeSystem.BLL.Abstractions.EntitiesDTO
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Descriprion { get; set; }
+        public string Description { get; set; }
     }
 }
