@@ -9,6 +9,6 @@ namespace KnowledgeSystem.BLL.Abstractions.EntitiesDTO
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<UserSubjectDTO> RatedByUsers { get; set; }
+        public IList<UserSubjectDTO> RatedByUsers { get; set; }
     }
 }

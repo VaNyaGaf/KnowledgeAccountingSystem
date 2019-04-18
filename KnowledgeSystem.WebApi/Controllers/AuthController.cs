@@ -64,8 +64,8 @@ namespace KnowledgeSystem.WebApi.Controllers
 
             userDto.Id = authUser.Id;
             userDto = await _userService.AddAsync(userDto);
-            var token = await GeneraeToken(authUser);
 
+            var token = await GeneraeToken(authUser);
             return Ok(new { user = userDto, token });
         }
 
@@ -81,7 +81,8 @@ namespace KnowledgeSystem.WebApi.Controllers
             if (!result.Succeeded)
                 return BadRequest();
 
-            AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
+            AuthUser authUser = await _userManager.FindByNameAsync(signInModel.Email);
+            //AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
             var userDto = await _userService.GetByIdAsync(authUser.Id);
 
             var token = await GeneraeToken(authUser);
@@ -117,7 +118,7 @@ namespace KnowledgeSystem.WebApi.Controllers
                 issuer: _configuration["JWT:Issuer"],
                 audience: _configuration["JWT:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(10),
+                expires: DateTime.Now.AddMinutes(600),
                 signingCredentials: signInCredentials
             );
 

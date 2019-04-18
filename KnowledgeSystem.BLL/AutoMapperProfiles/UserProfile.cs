@@ -8,11 +8,13 @@ namespace KnowledgeSystem.BLL.AutoMapperProfiles
     {
         public UserProfile()
         {
-            CreateMap<UserDTO, User>().MaxDepth(3)
-                .ForMember(user => user.UserSubjects, opt => opt.MapFrom(userDto => userDto.RatedSubjects));
+            CreateMap<UserDTO, User>()
+                .ForMember(user => user.UserSubjects,
+                opt => opt.MapFrom(userDto => userDto.RatedSubjects));
 
-            CreateMap<User, UserDTO>().MaxDepth(3)
-                .ForMember(userDto => userDto.RatedSubjects, opt => opt.MapFrom(u => u.UserSubjects));
+            CreateMap<User, UserDTO>()
+                .ForMember(userDto => userDto.RatedSubjects,
+                opt => opt.MapFrom(u => u.UserSubjects));
         }
     }
 }

@@ -8,11 +8,11 @@ namespace KnowledgeSystem.BLL.AutoMapperProfiles
     {
         public SubjectProfile()
         {
-            CreateMap<SubjectDTO, Subject>().MaxDepth(3)
+            CreateMap<SubjectDTO, Subject>()
                 .ForMember(subject => subject.UserSubjects,
                 opt => opt.MapFrom(subjectDto => subjectDto.RatedByUsers));
 
-            CreateMap<Subject, SubjectDTO>().MaxDepth(3)
+            CreateMap<Subject, SubjectDTO>()
                 .ForMember(subjectDto => subjectDto.RatedByUsers,
                 opt => opt.MapFrom(subject => subject.UserSubjects));
         }

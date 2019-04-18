@@ -8,8 +8,7 @@ namespace KnowledgeSystem.BLL.AutoMapperProfiles
     {
         public UserSubjectProfile()
         {
-            CreateMap<UserSubject, UserSubjectDTO>().MaxDepth(3)
-                .ReverseMap().MaxDepth(3);
+            CreateMap<UserSubject, UserSubjectDTO>().ReverseMap();
         }
     }
 }

@@ -14,6 +14,6 @@ namespace KnowledgeSystem.BLL.Abstractions.EntitiesDTO
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        public List<UserSubjectDTO> RatedSubjects { get; set; }
+        public IList<UserSubjectDTO> RatedSubjects { get; set; }
     }
 }

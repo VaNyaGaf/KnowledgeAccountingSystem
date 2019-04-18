@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using KnowledgeSystem.DAL.Abstractions.Entities;
 using KnowledgeSystem.WebApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -39,12 +38,13 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
+        public async Task<ActionResult<IList<UserDTO>>> GetAllUsers()
         {
             return Ok(await _userService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById(string id)
         {
             var userDto = await _userService.GetByIdAsync(id);
@@ -52,6 +52,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var authUser = await _userManager.FindByIdAsync(id);
@@ -62,6 +63,17 @@ namespace KnowledgeSystem.WebApi.Controllers
             await _userService.RemoveAsync(id);
             await _userManager.DeleteAsync(authUser);
 
+            return Ok();
+        }
+
+        [HttpPut("rateSubject")]
+        [Authorize]
+        public async Task<IActionResult> RateTheSubject(UserSubjectDTO ratedSubject)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            await _userService.RateTheSubject(ratedSubject);
             return Ok();
         }
     }

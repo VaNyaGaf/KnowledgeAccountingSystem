@@ -52,5 +52,12 @@ namespace KnowledgeSystem.BLL
         {
             return await _unitOfWork.Users.GetByIdAsync(id);
         }
+
+        public async Task RateTheSubject(UserSubjectDTO ratedSubject)
+        {
+            UserSubject subj = _mapper.Map<UserSubject>(ratedSubject);
+            await _unitOfWork.Users.RateTheSubject(subj);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

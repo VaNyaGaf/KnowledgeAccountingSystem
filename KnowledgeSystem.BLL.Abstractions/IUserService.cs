@@ -1,5 +1,4 @@
 ﻿using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using KnowledgeSystem.DAL.Abstractions.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,5 +13,7 @@ namespace KnowledgeSystem.BLL.Abstractions
         Task<UserDTO> GetByIdAsync(string id);
 
         Task RemoveAsync(string id);
+
+        Task RateTheSubject(UserSubjectDTO ratedSubject);
     }
 }

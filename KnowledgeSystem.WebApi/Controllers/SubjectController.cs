@@ -10,7 +10,6 @@ namespace KnowledgeSystem.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
@@ -23,6 +22,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddSubject([FromBody] SubjectDTO subjectDto)
         {
             if (!ModelState.IsValid)
@@ -33,6 +33,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateSubject([FromBody] SubjectDTO subjectDto)
         {
             await _subjectService.UpdateAsync(subjectDto);
@@ -52,6 +53,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteSubjectById(int id)
         {
             await _subjectService.RemoveAsync(id);

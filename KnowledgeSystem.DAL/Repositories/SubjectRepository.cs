@@ -14,7 +14,7 @@ namespace KnowledgeSystem.DAL.Repositories
         public async Task<Subject> GetByIdAsync(int id)
         {
             var subject = await _db.Set<Subject>().FindAsync(id);
-            _db.Entry(subject).Collection(s => s.UserSubjects).Load();
+            await _db.Entry(subject).Collection(s => s.UserSubjects).LoadAsync();
             return subject;
         }
 

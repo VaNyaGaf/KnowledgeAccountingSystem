@@ -45,9 +45,9 @@ namespace KnowledgeSystem.WebApi
             services.RegisterDependencies(appDbConnString);
             services.ConfigureJwt(Configuration["JWT:Issuer"], Configuration["JWT:Audience"], Configuration["JWT:SecretKey"]);
 
-            services.AddMvc().AddJsonOptions(options => {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddJsonOptions(options => 
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
