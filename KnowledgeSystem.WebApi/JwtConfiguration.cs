@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace KnowledgeSystem.WebApi
@@ -9,7 +10,12 @@ namespace KnowledgeSystem.WebApi
     {
         public static void ConfigureJwt(this IServiceCollection service, string issuer, string audience, string signinKey)
         {
-            service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            service.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(option =>
                 {
                     option.TokenValidationParameters = new TokenValidationParameters()
@@ -23,7 +29,6 @@ namespace KnowledgeSystem.WebApi
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signinKey))
                     };
                 });
-
         }
     }
 }

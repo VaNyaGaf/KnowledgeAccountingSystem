@@ -1,4 +1,4 @@
-﻿using KnowledgeSystem.DAL.Abstractions.Entities;
+﻿using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,14 +6,14 @@ namespace KnowledgeSystem.BLL.Abstractions
 {
     public interface ISubjectService
     {
-        Task AddAsync(Subject entity);
+        Task<SubjectDTO> AddAsync(SubjectDTO subjectEntity);
 
-        Task<IEnumerable<Subject>> GetAllAsync();
+        Task<IList<SubjectDTO>> GetAllAsync();
 
-        Task<Subject> GetByIdAsync(int id);
+        Task<SubjectDTO> GetByIdAsync(int id);
 
-        Task Update(Subject subject);
+        Task UpdateAsync(SubjectDTO subjectEntity);
 
-        Task RemoveAsync(Subject entity);
+        Task RemoveAsync(int id);
     }
 }

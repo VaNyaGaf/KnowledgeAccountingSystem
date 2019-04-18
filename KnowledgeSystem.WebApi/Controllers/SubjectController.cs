@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using KnowledgeSystem.DAL.Abstractions.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,10 +10,12 @@ namespace KnowledgeSystem.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
         private readonly IMapper _mapper;
+
         public SubjectController(ISubjectService subjectService, IMapper mapper)
         {
             _subjectService = subjectService;
@@ -21,32 +23,30 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTask([FromBody] SubjectDTO subjectDto)
+        public async Task<IActionResult> AddSubject([FromBody] SubjectDTO subjectDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var subject = _mapper.Map<Subject>(subjectDto);
-            await _subjectService.AddAsync(subject);
-            return Ok(subject);
+            subjectDto = await _subjectService.AddAsync(subjectDto);
+            return Ok(subjectDto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTask([FromBody] SubjectDTO subjectDto)
+        public async Task<IActionResult> UpdateSubject([FromBody] SubjectDTO subjectDto)
         {
-            var subject = _mapper.Map<Subject>(subjectDto);
-            await _subjectService.Update(subject);
-            return Ok(subject);
+            await _subjectService.UpdateAsync(subjectDto);
+            return Ok(subjectDto);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetAllSubjects()
+        public async Task<ActionResult<IList<SubjectDTO>>> GetAllSubjects()
         {
             return Ok(await _subjectService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Subject>> GetSubjectById(int id)
+        public async Task<ActionResult<SubjectDTO>> GetSubjectById(int id)
         {
             return Ok(await _subjectService.GetByIdAsync(id));
         }
@@ -54,11 +54,8 @@ namespace KnowledgeSystem.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubjectById(int id)
         {
-            var subject = await _subjectService.GetByIdAsync(id);
-            if (subject is null)
-                return BadRequest();
-            await _subjectService.RemoveAsync(subject);
-            return Ok(subject);
+            await _subjectService.RemoveAsync(id);
+            return Ok();
         }
     }
 }

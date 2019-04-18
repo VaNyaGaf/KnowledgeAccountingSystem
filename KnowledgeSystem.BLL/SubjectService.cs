@@ -1,4 +1,6 @@
-﻿using KnowledgeSystem.BLL.Abstractions;
+﻿using AutoMapper;
+using KnowledgeSystem.BLL.Abstractions;
+using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
 using System.Collections.Generic;
@@ -9,42 +11,55 @@ namespace KnowledgeSystem.BLL
     public class SubjectService : ISubjectService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public SubjectService(IUnitOfWork unitOfWork)
+        public SubjectService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public async Task AddAsync(Subject entity)
+        public async Task<SubjectDTO> AddAsync(SubjectDTO subjectEntity)
         {
-            _unitOfWork.Subjects.Add(entity);
+            var subject = _mapper.Map<Subject>(subjectEntity);
+            _unitOfWork.Subjects.Add(subject);
             await _unitOfWork.SaveAsync();
+            return _mapper.Map<SubjectDTO>(subject);
         }
 
-        public async Task<IEnumerable<Subject>> GetAllAsync()
+        public async Task<IList<SubjectDTO>> GetAllAsync()
         {
-            return await _unitOfWork.Subjects.GetAllAsync();
+            var subjects = await _unitOfWork.Subjects.GetAllAsync();
+            IList<SubjectDTO> subjectDTOs = _mapper.Map<IList<Subject>, IList<SubjectDTO>>(subjects);
+            return subjectDTOs;
+        }
+        
+        public async Task<SubjectDTO> GetByIdAsync(int id)
+        {
+            var subject = await _unitOfWork.Subjects.GetByIdAsync(id);
+            var subjectDto = _mapper.Map<SubjectDTO>(subject);
+            return subjectDto;
         }
 
-        public async Task<Subject> GetByIdAsync(int id)
+        public async Task UpdateAsync(SubjectDTO subjectEntity)
         {
-            return await _unitOfWork.Subjects.GetByIdAsync(id);
-        }
-
-        public async Task Update(Subject subject)
-        {
-            var existingSubject = await GetByIdAsync(subject.Id);
-            if (existingSubject is null)
-                throw new System.NullReferenceException("There are no subject with such id");
-
+            var subject = _mapper.Map<Subject>(subjectEntity);
             _unitOfWork.Subjects.Update(subject);
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task RemoveAsync(Subject entity)
+        public async Task RemoveAsync(int id)
         {
-            _unitOfWork.Subjects.Remove(entity);
+            //var subjectDto = GetByIdAsync(id);
+            //var subject = _mapper.Map<Subject>(subjectDto);
+            var subject = await GetSubjectByIdAsync(id);
+            _unitOfWork.Subjects.Remove(subject);
             await _unitOfWork.SaveAsync();
+        }
+
+        private async Task<Subject> GetSubjectByIdAsync(int id)
+        {
+            return await _unitOfWork.Subjects.GetByIdAsync(id);
         }
     }
 }

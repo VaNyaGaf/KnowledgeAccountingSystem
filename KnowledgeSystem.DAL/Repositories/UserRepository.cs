@@ -1,5 +1,9 @@
 ﻿using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.DAL.Repositories
 {
@@ -9,6 +13,12 @@ namespace KnowledgeSystem.DAL.Repositories
             : base(context)
         {
         }
+
+        public async Task<User> GetByIdAsync(string id)
+        {
+            var user = await _db.Set<User>().FindAsync(id);
+            _db.Entry(user).Collection(u => u.UserSubjects).Load();
+            return user;
+        }
     }
 }
- 

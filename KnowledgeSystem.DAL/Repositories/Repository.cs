@@ -19,14 +19,9 @@ namespace KnowledgeSystem.DAL.Repositories
             _db.Set<TEntity>().Add(entity);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<IList<TEntity>> GetAllAsync()
         {
             return await _db.Set<TEntity>().ToListAsync();
-        }
-
-        public async Task<TEntity> GetByIdAsync<T>(T id)
-        {
-            return await _db.Set<TEntity>().FindAsync(id);
         }
 
         public void Remove(TEntity entity)

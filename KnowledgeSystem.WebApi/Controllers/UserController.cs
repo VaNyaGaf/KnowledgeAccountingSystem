@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
 using KnowledgeSystem.BLL.Abstractions;
+using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions.Entities;
 using KnowledgeSystem.WebApi.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KnowledgeSystem.WebApi.Controllers
@@ -24,31 +28,41 @@ namespace KnowledgeSystem.WebApi.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("current")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var currentUserId = HttpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+            var currentUser = await _userService.GetByIdAsync(currentUserId);
+
+            return Ok(currentUser);
+        }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsers()
         {
             return Ok(await _userService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            return Ok(await _userService.GetByIdAsync(id));
+            var userDto = await _userService.GetByIdAsync(id);
+            return Ok(userDto);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var user = await _userService.GetByIdAsync(id);
             var authUser = await _userManager.FindByIdAsync(id);
             
-            if (user == null || authUser == null)
+            if (authUser == null)
                 return BadRequest();
 
-            await _userService.RemoveAsync(user);
+            await _userService.RemoveAsync(id);
             await _userManager.DeleteAsync(authUser);
 
-            return Ok(user);
+            return Ok();
         }
     }
 }

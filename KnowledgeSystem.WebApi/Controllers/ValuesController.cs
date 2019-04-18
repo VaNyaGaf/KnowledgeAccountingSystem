@@ -3,6 +3,7 @@ using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
 using KnowledgeSystem.DAL.Abstractions;
 using KnowledgeSystem.DAL.Abstractions.Entities;
+using KnowledgeSystem.WebApi.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,14 @@ namespace KnowledgeSystem.WebApi.Controllers
         private readonly IUserService _userService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<AuthUser> _userManager;
+        private readonly SignInManager<AuthUser> _signInManager;
         //***************************************
         //  TO DO:
         //      Add JWT
         //      Add second Db for auth users
         //***************************************
-        public ValuesController(IUnitOfWork unitOfWork, IUserService userService, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+        public ValuesController(IUnitOfWork unitOfWork, IUserService userService, IMapper mapper, UserManager<AuthUser> userManager, SignInManager<AuthUser> signInManager)
         {
             _userService = userService;
             _unitOfWork = unitOfWork;
@@ -34,10 +35,11 @@ namespace KnowledgeSystem.WebApi.Controllers
             _signInManager = signInManager;
         }
         // GET api/values
-        [HttpGet, Authorize]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "Hello", "from", "Authorize", "Method" };
+            return new string[] { "Hello", "from", "Authorize", "Admin Method" };
         }
 
         // GET api/values/5
@@ -57,47 +59,8 @@ namespace KnowledgeSystem.WebApi.Controllers
                 FirstName = userDTO.FirstName,
                 LastName = userDTO.LastName
             };
-            var result = await _userManager.CreateAsync(user, userDTO.Password);
-            return Ok(result);
-        }
-
-        [HttpPost("RegUser")]
-        //[Route("RegUser")]
-        public async Task<object> PostRegUser([FromBody] UserDTO userDTO)
-        {
-            var user = _mapper.Map<User>(userDTO);
-            try
-            {
-                await _userService.AddAsync(user);
-                return Ok();
-            }
-            catch (System.Exception ex)
-            {
-                return NotFound(ex);
-            }
-        }
-        [HttpDelete("DelUser")]
-        public async Task<IActionResult> DeleteUser([FromBody] UserDTO userDTO)
-        {
-            var user = _mapper.Map<User>(userDTO);
-            try
-            {
-                //var user = await _userService.GetByIdAsync(userDTO.Id);
-                await _userService.RemoveAsync(user);
-                return Ok(user);
-            }
-            catch (System.Exception ex)
-            {
-                return NotFound(ex);
-            }
-        }
-
-        // GET api/values
-        [HttpGet]
-        [Route("GetUsers")]
-        public async Task<IEnumerable<User>> GetUsers()
-        {
-            return await _userService.GetAllAsync();
+            //var result = await _userManager.CreateAsync(user, userDTO.Password);
+            return Ok();
         }
 
         // PUT api/values/5

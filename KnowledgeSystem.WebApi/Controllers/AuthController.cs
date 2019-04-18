@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using KnowledgeSystem.BLL.Abstractions;
 using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
-using KnowledgeSystem.DAL.Abstractions.Entities;
 using KnowledgeSystem.WebApi.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,19 +22,22 @@ namespace KnowledgeSystem.WebApi.Controllers
     {
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public AuthController(
-            UserManager<AuthUser> userManager
-            , SignInManager<AuthUser> signInManager
-            , IUserService userService
-            , IConfiguration configuration
-            , IMapper mapper)
+            UserManager<AuthUser> userManager,
+            SignInManager<AuthUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
+            IUserService userService,
+            IConfiguration configuration,
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _userService = userService;
             _configuration = configuration;
             _mapper = mapper;
@@ -54,14 +56,17 @@ namespace KnowledgeSystem.WebApi.Controllers
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
-            //await _signInManager.SignInAsync(authUser, false);        // Do we need this line??
-            var user = _mapper.Map<User>(userDto);
-            user.Id = authUser.Id;          // Is there exists another way of creating user, exmp. new User()
+            if (authUser.UserName == "admin@gmail.com")
+            {
+                await CreateRole("Admin");
+                await _userManager.AddToRoleAsync(authUser, "Admin");
+            }
 
-            await _userService.AddAsync(user);
-            var token = GeneraeToken(user);
+            userDto.Id = authUser.Id;
+            userDto = await _userService.AddAsync(userDto);
+            var token = await GeneraeToken(authUser);
 
-            return Ok(new { user, token });
+            return Ok(new { user = userDto, token });
         }
 
         [HttpPost]
@@ -77,13 +82,21 @@ namespace KnowledgeSystem.WebApi.Controllers
                 return BadRequest();
 
             AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
-            User user = await _userService.GetByIdAsync(authUser.Id);
-            var token = GeneraeToken(user);
+            var userDto = await _userService.GetByIdAsync(authUser.Id);
 
-            return Ok(new { user, token });
+            var token = await GeneraeToken(authUser);
+            return Ok(new { user = userDto, token });
         }
 
-        private string GeneraeToken(User user)
+        private async Task CreateRole(string name)
+        {
+            var isRoleExsist = await _roleManager.RoleExistsAsync(name);
+
+            if (!isRoleExsist)
+                await _roleManager.CreateAsync(new IdentityRole(name));
+        }
+
+        private async Task<string> GeneraeToken(AuthUser user)
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:SecretKey"]));
             var signInCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -94,8 +107,11 @@ namespace KnowledgeSystem.WebApi.Controllers
                 new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.Now.ToUnixTimeSeconds().ToString())
             };
 
-            if (user.FirstName.Contains("admin"))
-                claims.Add(new Claim(ClaimTypes.Role, "admin"));
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+
+            foreach (var role in userRoles)
+                claims.Add(new Claim(ClaimTypes.Role, role));
 
             var tokeOptions = new JwtSecurityToken(
                 issuer: _configuration["JWT:Issuer"],

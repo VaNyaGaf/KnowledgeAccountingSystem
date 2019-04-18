@@ -1,4 +1,5 @@
-﻿using KnowledgeSystem.DAL.Abstractions.Entities;
+﻿using KnowledgeSystem.BLL.Abstractions.EntitiesDTO;
+using KnowledgeSystem.DAL.Abstractions.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,12 +7,12 @@ namespace KnowledgeSystem.BLL.Abstractions
 {
     public interface IUserService
     {
-        Task AddAsync(User entity);
+        Task<UserDTO> AddAsync(UserDTO userEntity);
 
-        Task<IEnumerable<User>> GetAllAsync();
+        Task<IList<UserDTO>> GetAllAsync();
 
-        Task<User> GetByIdAsync(string id);
+        Task<UserDTO> GetByIdAsync(string id);
 
-        Task RemoveAsync(User entity);
+        Task RemoveAsync(string id);
     }
 }

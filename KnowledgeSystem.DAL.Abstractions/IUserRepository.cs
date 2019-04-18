@@ -1,9 +1,11 @@
 ﻿using KnowledgeSystem.DAL.Abstractions.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KnowledgeSystem.DAL.Abstractions
 {
     public interface IUserRepository : IRepository<User>
     {
-        // Some methoed only for user repository
+        Task<User> GetByIdAsync(string id);
     }
 }

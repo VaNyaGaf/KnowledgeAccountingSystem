@@ -5,7 +5,8 @@ namespace KnowledgeSystem.DAL.Abstractions
 {
     public interface ISubjectRepository : IRepository<Subject>
     {
-        // Some unique methods only for SubjectRepository
         void Update(Subject subject);
+
+        Task<Subject> GetByIdAsync(int id);
     }
 }
