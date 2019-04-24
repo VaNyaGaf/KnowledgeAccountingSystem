@@ -9,7 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,7 +81,6 @@ namespace KnowledgeSystem.WebApi.Controllers
                 return BadRequest();
 
             AuthUser authUser = await _userManager.FindByNameAsync(signInModel.Email);
-            //AuthUser authUser = _userManager.Users.FirstOrDefault(u => u.UserName == signInModel.Email);
             var userDto = await _userService.GetByIdAsync(authUser.Id);
 
             var token = await GeneraeToken(authUser);
@@ -109,7 +107,6 @@ namespace KnowledgeSystem.WebApi.Controllers
             };
 
             var userRoles = await _userManager.GetRolesAsync(user);
-            var userClaims = await _userManager.GetClaimsAsync(user);
 
             foreach (var role in userRoles)
                 claims.Add(new Claim(ClaimTypes.Role, role));

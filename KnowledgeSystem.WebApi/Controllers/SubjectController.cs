@@ -47,6 +47,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<SubjectDTO>> GetSubjectById(int id)
         {
             return Ok(await _subjectService.GetByIdAsync(id));

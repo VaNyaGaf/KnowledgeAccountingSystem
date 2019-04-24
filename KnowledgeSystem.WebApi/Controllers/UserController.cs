@@ -38,6 +38,7 @@ namespace KnowledgeSystem.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IList<UserDTO>>> GetAllUsers()
         {
             return Ok(await _userService.GetAllAsync());
